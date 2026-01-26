@@ -12,7 +12,6 @@
         tm_fc TEXT,
         data JSONB,
         created_at TIMESTAMP DEFAULT now()
-        CONSTRAINT weather_mid_temp_reg_tmfc_uk UNIQUE (reg_id, tm_fc)
       );
 
       CREATE TABLE IF NOT EXISTS {{ api_schema }}.weather_mid_land (
@@ -22,7 +21,6 @@
         tm_fc TEXT,
         data JSONB,
         created_at TIMESTAMP DEFAULT now()
-        CONSTRAINT weather_mid_land_reg_tmfc_uk UNIQUE (reg_id, tm_fc)
       );
 
       CREATE TABLE IF NOT EXISTS {{ api_schema }}.energy_kepco_monthly (
