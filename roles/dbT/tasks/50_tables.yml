@@ -1,4 +1,12 @@
 ---
+- name: Ensure API schema exists
+  become: true
+  become_user: postgres
+  community.postgresql.postgresql_query:
+    db: "{{ app_db_name }}"
+    query: |
+      CREATE SCHEMA IF NOT EXISTS {{ api_schema }};
+
 - name: Create API ingestion tables (DDL only)
   become: true
   become_user: postgres
