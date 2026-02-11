@@ -68,24 +68,6 @@
 ###############################################################################
 # 4. Backup node / storage
 ###############################################################################
-- name: Build Backup / Storage
-  hosts: backup_clients
-  gather_facts: true
-  become: true
-
-  pre_tasks:
-    - name: Load DB non-secret vars
-      ansible.builtin.include_vars:
-        file: "{{ playbook_dir }}/group_vars/db/main.yml"
-
-    - name: Load DB secret vars (vault)
-      ansible.builtin.include_vars:
-        file: "{{ db_vault_vars_file }}"
-
-  roles:
-    - backup
-
-  tags: ['backup']
 
 
 ###############################################################################
@@ -110,22 +92,3 @@
 
   tags: ['dbT']
 
-- name: (post) Remove TCPMSS clamp rule on proxy
-  hosts: proxy
-  gather_facts: true
-  become: true
-
-  pre_tasks:
-    - name: Load Proxy non-secret vars
-      ansible.builtin.include_vars:
-        file: "{{ playbook_dir }}/group_vars/proxy/main.yml"
-
-    - name: Load Proxy secret vars (vault)
-      ansible.builtin.include_vars:
-        file: "{{ playbook_dir }}/group_vars/proxy/vault.yml"
-
-  roles:
-    - role: proxy
-      tasks_from: delete
-
-  tags: ['post_mss_delete']
